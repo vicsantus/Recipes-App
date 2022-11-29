@@ -8,15 +8,14 @@ export default function Recipes() {
   const { location: { pathname } } = history;
   const states = useContext(ApiContext);
   const testPath = pathname === '/meals';
-  let food = '';
-  let foodsDoze = '';
+  let food = [];
+  let foodsDoze = [];
 
   if (apiResult) {
     food = history.location.pathname === '/meals'
       ? [...apiResult.meals] : [...apiResult.drinks];
     const mgxEleven = 11;
     foodsDoze = food.filter((_fd, idx) => idx <= mgxEleven);
-    console.log(foodsDoze);
   }
 
   useEffect(() => {
