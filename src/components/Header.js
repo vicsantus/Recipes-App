@@ -13,6 +13,7 @@ function Header() {
 
   const [searchBar, setSearchBar] = useState(false);
   const [search, setSearch] = useState('');
+  const [searchFor, setSearchFor] = useState('');
   return (
     <div>
       <h1>{titleName}</h1>
@@ -37,12 +38,53 @@ function Header() {
       }
       {
         searchBar && (
-          <input
-            type="text"
-            value={ search }
-            data-testid="search-input"
-            onChange={ ({ target }) => setSearch(target.value) }
-          />
+          <div>
+            <input
+              type="text"
+              value={ search }
+              data-testid="search-input"
+              onChange={ ({ target }) => setSearch(target.value) }
+            />
+            <label htmlFor="ingredient">
+              <input
+                type="radio"
+                name="search-for"
+                id="ingredient"
+                value="ingredient"
+                onClick={ (e) => setSearchFor(e.target.value) }
+                data-testid="ingredient-search-radio"
+              />
+              Ingredient
+            </label>
+            <label htmlFor="name">
+              <input
+                type="radio"
+                name="search-for"
+                id="name"
+                value="name"
+                onClick={ (e) => setSearchFor(e.target.value) }
+                data-testid="name-search-radio"
+              />
+              Name
+            </label>
+            <label htmlFor="first-letter">
+              <input
+                type="radio"
+                name="search-for"
+                id="first-letter"
+                value="first-letter"
+                onClick={ (e) => setSearchFor(e.target.value) }
+                data-testid="first-letter-search-radio"
+              />
+              First Letter
+            </label>
+            <button
+              type="button"
+              data-testid="exec-search-btn"
+            >
+              Search
+            </button>
+          </div>
         )
       }
     </div>
