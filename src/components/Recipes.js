@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import ApiContext from '../context/ApiContext';
-// import Footer from './Footer';
+import Footer from './Footer';
 import Header from './Header';
 
 export default function Recipes() {
@@ -143,7 +143,7 @@ export default function Recipes() {
           </Link>
         ))}
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }
