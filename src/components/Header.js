@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import mealsFetchInput from '../services/mealsFetchInput';
 
 function Header() {
   const btnToHidden = ['/profile', '/done-recipes', '/favorite-recipes'];
@@ -14,6 +15,24 @@ function Header() {
   const [searchBar, setSearchBar] = useState(false);
   const [search, setSearch] = useState('');
   const [searchFor, setSearchFor] = useState('');
+  const [resultSearch, setresultSearch] = useState([]);
+
+  const searchSame = () => {
+    if (search.length > 1 && searchFor === 'first-letter') {
+      return global.alert('Your search must have only 1 (one) character');
+    }
+    if (history.location.pathname === '/meals') {
+      mealsFetchInput(search, searchFor).then((res) => setresultSearch(res));
+    }
+    // if (history.location.pathname === '/meals') {
+
+    // }
+  };
+
+  useEffect(() => {
+    console.log(resultSearch);
+  }, [resultSearch]);
+
   return (
     <div>
       <h1>{titleName}</h1>
@@ -41,6 +60,7 @@ function Header() {
           <div>
             <input
               type="text"
+              name="search"
               value={ search }
               data-testid="search-input"
               onChange={ ({ target }) => setSearch(target.value) }
@@ -81,6 +101,7 @@ function Header() {
             <button
               type="button"
               data-testid="exec-search-btn"
+              onClick={ () => searchSame() }
             >
               Search
             </button>
