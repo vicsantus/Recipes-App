@@ -39,6 +39,7 @@ function Header() {
         searchBar && (
           <input
             type="text"
+            value={ search }
             data-testid="search-input"
             onChange={ ({ target }) => setSearch(target.value) }
           />
