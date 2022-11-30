@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ApiContext from '../context/ApiContext';
+import Header from './Header';
 
 export default function Recipes() {
   const [apiResult, setApiResult] = useState();
@@ -39,9 +40,11 @@ export default function Recipes() {
 
   return (
     <div>
+      <Header />
       {foodsDoze && foodsDoze.map((foods, idx) => (
         <div key={ idx } data-testid={ `${idx}-recipe-card` }>
           <img
+            style={ { width: '75px' } }
             data-testid={ `${idx}-card-img` }
             src={ testPath ? foods.strMealThumb : foods.strDrinkThumb }
             alt={ testPath ? foods.idMeal : foods.idDrinks }
