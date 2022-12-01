@@ -7,7 +7,6 @@ function CardInfoDrinks() {
   const [showCardItem, setShowCardItem] = useState([]);
 
   useEffect(() => {
-    console.log(infoToCard);
     setShowCardItem(infoToCard);
   }, [infoToCard]);
   return (

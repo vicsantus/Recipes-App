@@ -34,7 +34,7 @@ export default function Recipes() {
         const jsonD = await responseDrinks.json();
         setApiResult({ meals: jsonM.meals, drinks: jsonD.drinks });
       } catch (e) {
-        console.log(`Aconteceu algum erro na chamada da API: ${e}`);
+        console.error(`Aconteceu algum erro na chamada da API: ${e}`);
       }
     };
     makeFetch();
