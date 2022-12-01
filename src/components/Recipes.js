@@ -104,7 +104,7 @@ export default function Recipes() {
 
   return (
     <>
-      <Header />
+      <Header hasInfo={ capturaMesmo } />
       <div>
         <button
           onClick={ handleClickCateg }
@@ -125,30 +125,31 @@ export default function Recipes() {
             {categ}
           </button>
         ))}
-        <Header hasInfo={ capturaMesmo } />
-      {
-        !hasInfo && (
-        {foodsDoze && foodsDoze.map((foods, idx) => (
-          <Link
-            key={ idx }
-            to={ `/${testPath ? 'meals' : 'drinks'}`
-            + `/${!testPath ? foods.idDrink : foods.idMeal}` }
-          >
-            <div data-testid={ `${idx}-recipe-card` }>
-              <img
-                style={ { width: '75px' } }
-                data-testid={ `${idx}-card-img` }
-                src={ testPath ? foods.strMealThumb : foods.strDrinkThumb }
-                alt={ testPath ? foods.idMeal : foods.idDrinks }
-              />
-              <p data-testid={ `${idx}-card-name` }>
-                { testPath ? foods.strMeal : foods.strDrink}
-              </p>
+        {
+          !hasInfo && (
+            <div>
+              {foodsDoze && foodsDoze.map((foods, idx) => (
+                <Link
+                  key={ idx }
+                  to={ `/${testPath ? 'meals' : 'drinks'}`
+          + `/${!testPath ? foods.idDrink : foods.idMeal}` }
+                >
+                  <div data-testid={ `${idx}-recipe-card` }>
+                    <img
+                      style={ { width: '75px' } }
+                      data-testid={ `${idx}-card-img` }
+                      src={ testPath ? foods.strMealThumb : foods.strDrinkThumb }
+                      alt={ testPath ? foods.idMeal : foods.idDrinks }
+                    />
+                    <p data-testid={ `${idx}-card-name` }>
+                      { testPath ? foods.strMeal : foods.strDrink}
+                    </p>
+                  </div>
+                </Link>
+              ))}
             </div>
-          </Link>
-        ))}
-        )
-      }
+          )
+        }
       </div>
       <Footer />
     </>
