@@ -1,10 +1,15 @@
+import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import mealsFetchInput from '../services/mealsFetchInput';
+import drinksFetchInput from '../services/drinksFetchInput';
+import CardInfoMeals from './CardInfoMeals';
+import CardInfoContext from '../context/CardInfoContext';
+import CardInfoDrinks from './CardInfoDrinks';
 
-function Header() {
+function Header({ hasInfo }) {
   const btnToHidden = ['/profile', '/done-recipes', '/favorite-recipes'];
 
   const history = useHistory();
@@ -22,16 +27,30 @@ function Header() {
       return global.alert('Your search must have only 1 (one) character');
     }
     if (history.location.pathname === '/meals') {
-      mealsFetchInput(search, searchFor).then((res) => setresultSearch(res));
+      mealsFetchInput(search, searchFor)
+        .then((res) => setresultSearch(res));
+      if (resultSearch?.length === 0) {
+        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      }
     }
-    // if (history.location.pathname === '/meals') {
-
-    // }
+    if (history.location.pathname === '/drinks') {
+      drinksFetchInput(search, searchFor).then((res) => setresultSearch(res));
+      if (resultSearch?.length === 0) {
+        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      }
+    }
   };
 
   useEffect(() => {
-    console.log(resultSearch);
-  }, [resultSearch]);
+    hasInfo(resultSearch?.length > 0);
+
+    if (history.location.pathname === '/meals' && resultSearch?.length === 1) {
+      history.push(`/meals/${resultSearch[0].idMeal}`);
+    }
+    if (history.location.pathname === '/drinks' && resultSearch?.length === 1) {
+      history.push(`/drinks/${resultSearch[0].idDrink}`);
+    }
+  }, [resultSearch, history, hasInfo]);
 
   return (
     <div>
@@ -105,11 +124,35 @@ function Header() {
             >
               Search
             </button>
+
+            <div>
+              {
+                history.location.pathname === '/meals' && (
+                  <CardInfoContext.Provider value={ resultSearch }>
+                    <CardInfoMeals />
+                  </CardInfoContext.Provider>
+                )
+              }
+            </div>
+            <div>
+              {
+                history.location.pathname === '/drinks' && (
+                  <CardInfoContext.Provider value={ resultSearch }>
+                    <CardInfoDrinks />
+                  </CardInfoContext.Provider>
+                )
+              }
+            </div>
+
           </div>
         )
       }
     </div>
   );
 }
+
+Header.propTypes = {
+  hasInfo: PropTypes.func.isRequired,
+};
 
 export default Header;

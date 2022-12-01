@@ -12,6 +12,12 @@ export default function Recipes() {
   let food = [];
   let foodsDoze = [];
 
+  const [hasInfo, setHasInfo] = useState(false);
+
+  const capturaMesmo = (param) => {
+    setHasInfo(param);
+  };
+
   if (apiResult) {
     food = history.location.pathname === '/meals'
       ? [...apiResult.meals] : [...apiResult.drinks];
@@ -40,20 +46,28 @@ export default function Recipes() {
 
   return (
     <div>
-      <Header />
-      {foodsDoze && foodsDoze.map((foods, idx) => (
-        <div key={ idx } data-testid={ `${idx}-recipe-card` }>
-          <img
-            style={ { width: '75px' } }
-            data-testid={ `${idx}-card-img` }
-            src={ testPath ? foods.strMealThumb : foods.strDrinkThumb }
-            alt={ testPath ? foods.idMeal : foods.idDrinks }
-          />
-          <p data-testid={ `${idx}-card-name` }>
-            { testPath ? foods.strMeal : foods.strDrink}
-          </p>
-        </div>
-      ))}
+      <Header hasInfo={ capturaMesmo } />
+      {
+        !hasInfo && (
+
+          <div>
+            {foodsDoze && foodsDoze.map((foods, idx) => (
+              <div key={ idx } data-testid={ `${idx}-recipe-card` }>
+                <img
+                  style={ { width: '75px' } }
+                  data-testid={ `${idx}-card-img` }
+                  src={ testPath ? foods.strMealThumb : foods.strDrinkThumb }
+                  alt={ testPath ? foods.idMeal : foods.idDrinks }
+                />
+                <p data-testid={ `${idx}-card-name` }>
+                  { testPath ? foods.strMeal : foods.strDrink}
+                </p>
+              </div>
+            ))}
+          </div>
+        )
+      }
+
     </div>
   );
 }
