@@ -1,15 +1,17 @@
-import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import ApiContext from '../context/ApiContext';
+import CardInfoContext from '../context/CardInfoContext';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import mealsFetchInput from '../services/mealsFetchInput';
 import drinksFetchInput from '../services/drinksFetchInput';
-import CardInfoMeals from './CardInfoMeals';
-import CardInfoContext from '../context/CardInfoContext';
+import mealsFetchInput from '../services/mealsFetchInput';
 import CardInfoDrinks from './CardInfoDrinks';
+import CardInfoMeals from './CardInfoMeals';
 
-function Header({ hasInfo }) {
+function Header() {
+  const states = useContext(ApiContext);
+
   const btnToHidden = ['/profile', '/done-recipes', '/favorite-recipes'];
 
   const history = useHistory();
@@ -45,7 +47,7 @@ function Header({ hasInfo }) {
   };
 
   useEffect(() => {
-    hasInfo(resultSearch?.length > 0);
+    states.capturaMesmo(resultSearch?.length > 0);
 
     if (history.location.pathname === '/meals' && resultSearch?.length === 1) {
       history.push(`/meals/${resultSearch[0].idMeal}`);
@@ -53,7 +55,7 @@ function Header({ hasInfo }) {
     if (history.location.pathname === '/drinks' && resultSearch?.length === 1) {
       history.push(`/drinks/${resultSearch[0].idDrink}`);
     }
-  }, [resultSearch, history, hasInfo]);
+  }, [resultSearch, history, states]);
 
   return (
     <div>
@@ -158,8 +160,8 @@ function Header({ hasInfo }) {
   );
 }
 
-Header.propTypes = {
-  hasInfo: PropTypes.func.isRequired,
-};
+// Header.propTypes = {
+//   hasInfo: PropTypes.func.isRequired,
+// };
 
 export default Header;

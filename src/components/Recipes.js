@@ -15,11 +15,6 @@ export default function Recipes() {
   let food = [];
   let foodsDoze = [];
 
-  const [hasInfo, setHasInfo] = useState(false);
-  const capturaMesmo = (param) => {
-    setHasInfo(param);
-  };
-
   if (apiResult) {
     food = history.location.pathname === '/meals'
       ? [...apiResult.meals] : [...apiResult.drinks];
@@ -87,7 +82,7 @@ export default function Recipes() {
 
   return (
     <>
-      <Header hasInfo={ capturaMesmo } />
+      <Header />
       <div>
         <button
           onClick={ handleClickCateg }
@@ -109,7 +104,7 @@ export default function Recipes() {
           </button>
         ))}
         {
-          !hasInfo && (
+          !states.hasInfo && (
             <div>
               {foodsDoze?.map((foods, idx) => (
                 <Link

@@ -1,20 +1,25 @@
 import React, { useMemo, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Login from './components/Login';
-import Recipes from './components/Recipes';
-import ApiContext from './context/ApiContext';
-import RecipeDetails from './components/RecipeDetails';
-import RecipeInProgress from './components/RecipeInProgress';
-import Profile from './components/Profile';
 import DoneRecipes from './components/DoneRecipes';
 import FavoriteRecipes from './components/FavoriteRecipes';
+import Login from './components/Login';
+import Profile from './components/Profile';
+import RecipeDetails from './components/RecipeDetails';
+import RecipeInProgress from './components/RecipeInProgress';
+import Recipes from './components/Recipes';
+import ApiContext from './context/ApiContext';
 
 function App() {
   const [apis, setApis] = useState('');
 
+  const [hasInfo, setHasInfo] = useState(false);
+  const capturaMesmo = (param) => {
+    setHasInfo(param);
+  };
+
   const states = useMemo(() => ({
-    apis, setApis,
-  }), [apis]);
+    apis, setApis, hasInfo, setHasInfo, capturaMesmo,
+  }), [apis, hasInfo]);
 
   return (
     <ApiContext.Provider value={ states }>
