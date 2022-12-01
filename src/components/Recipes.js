@@ -15,6 +15,12 @@ export default function Recipes() {
   let food = [];
   let foodsDoze = [];
 
+  const [hasInfo, setHasInfo] = useState(false);
+
+  const capturaMesmo = (param) => {
+    setHasInfo(param);
+  };
+
   if (apiResult) {
     food = history.location.pathname === '/meals'
       ? [...apiResult.meals] : [...apiResult.drinks];
@@ -41,7 +47,7 @@ export default function Recipes() {
         const jsonD = await responseDrinks.json();
         setApiResult({ meals: jsonM.meals, drinks: jsonD.drinks });
       } catch (e) {
-        console.log(`Aconteceu algum erro na chamada da API: ${e}`);
+        console.error(`Aconteceu algum erro na chamada da API: ${e}`);
       }
     };
     makeFetch();
@@ -93,10 +99,6 @@ export default function Recipes() {
   };
 
   useEffect(() => {
-
-  }, [apiResult]);
-
-  useEffect(() => {
     states.setApis(apiResult);
   }, [apiResult, states]);
 
@@ -123,6 +125,9 @@ export default function Recipes() {
             {categ}
           </button>
         ))}
+        <Header hasInfo={ capturaMesmo } />
+      {
+        !hasInfo && (
         {foodsDoze && foodsDoze.map((foods, idx) => (
           <Link
             key={ idx }
@@ -142,6 +147,8 @@ export default function Recipes() {
             </div>
           </Link>
         ))}
+        )
+      }
       </div>
       <Footer />
     </>
