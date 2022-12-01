@@ -2,8 +2,8 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import App from '../App';
-// import Recipes from '../components/Recipes';
 import renderWithRouter from './helpers/renderWith';
+import mockCategDrinks from './mocks/mockCategDrinks';
 import mockCategories from './mocks/mockCategories';
 import mockRecipesMeals from './mocks/mockRecipesMeals';
 
@@ -47,23 +47,28 @@ describe('Testando o arquivo Recipes', () => {
     expect(categBeef).toBeInTheDocument();
     userEvent.click(categBeef);
     expect(await screen.findByTestId('0-card-name')).toBeInTheDocument();
-    expect(await screen.findByTestId('11-card-img')).toBeInTheDocument();
+    expect(await screen.findByTestId('10-card-img')).toBeInTheDocument();
     userEvent.click(categBeef);
-    expect(await screen.findByTestId('11-recipe-card')).toBeInTheDocument();
+    expect(await screen.findByTestId('10-recipe-card')).toBeInTheDocument();
   });
 
-  test('3- Verifica se os erros de fetch estão sendo feitos corretamente', async () => {
+  test('3- Verifica se categorias de drinks existem e aparecem na ordem correta', async () => {
     jest.spyOn(window, 'fetch');
     global.fetch.mockResolvedValue({
-      status: 401,
-      body: { success: false },
+      json: jest.fn().mockResolvedValue(mockCategDrinks),
     });
-
-    const logSpy = jest.spyOn(console, 'log');
-    const { history } = renderWithRouter(<App />, { initialEntries: ['/meals'] });
-    expect(history.location.pathname).toBe('/meals');
-    const categBeef = screen.queryByTestId('Beef-category-filter');
-    expect(categBeef).toBeFalsy();
-    expect(logSpy).toHaveBeenCalledWith('hello');
+    const { history } = renderWithRouter(<App />, { initialEntries: ['/drinks'] });
+    expect(history.location.pathname).toBe('/drinks');
+    userEvent.click(screen.getByTestId('drinks-bottom-btn'));
+    let categShake = null;
+    await waitFor(async () => {
+      categShake = await screen.findByTestId('Shake-category-filter');
+    }, { timeout: 8000 });
+    expect(categShake).toBeInTheDocument();
+    userEvent.click(categShake);
+    expect(await screen.findByTestId('0-card-name')).toBeInTheDocument();
+    expect(await screen.findByTestId('9-card-img')).toBeInTheDocument();
+    userEvent.click(categShake);
+    expect(await screen.findByTestId('9-recipe-card')).toBeInTheDocument();
   });
 });

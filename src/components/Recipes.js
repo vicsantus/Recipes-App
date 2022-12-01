@@ -15,6 +15,11 @@ export default function Recipes() {
   let food = [];
   let foodsDoze = [];
 
+  const [hasInfo, setHasInfo] = useState(false);
+  const capturaMesmo = (param) => {
+    setHasInfo(param);
+  };
+
   if (apiResult) {
     food = history.location.pathname === '/meals'
       ? [...apiResult.meals] : [...apiResult.drinks];
@@ -34,30 +39,22 @@ export default function Recipes() {
 
   useEffect(() => {
     const makeFetch = async () => {
-      try {
-        const responseMeals = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-        const responseDrinks = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-        const jsonM = await responseMeals.json();
-        const jsonD = await responseDrinks.json();
-        setApiResult({ meals: jsonM.meals, drinks: jsonD.drinks });
-      } catch (e) {
-        console.log(`Aconteceu algum erro na chamada da API: ${e}`);
-      }
+      const responseMeals = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      const responseDrinks = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      const jsonM = await responseMeals.json();
+      const jsonD = await responseDrinks.json();
+      setApiResult({ meals: jsonM.meals, drinks: jsonD.drinks });
     };
     makeFetch();
   }, []);
 
   useEffect(() => {
     const makeFetch = async () => {
-      try {
-        const responseMeals = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
-        const responseDrinks = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
-        const jsonM = await responseMeals.json();
-        const jsonD = await responseDrinks.json();
-        setResultCategs({ meals: jsonM.meals, drinks: jsonD.drinks });
-      } catch (e) {
-        console.log(`Aconteceu algum erro na chamada da API: ${e}`);
-      }
+      const responseMeals = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+      const responseDrinks = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+      const jsonM = await responseMeals.json();
+      const jsonD = await responseDrinks.json();
+      setResultCategs({ meals: jsonM.meals, drinks: jsonD.drinks });
     };
     makeFetch();
   }, []);
@@ -67,28 +64,20 @@ export default function Recipes() {
       setActualCateg(target.name);
       const urlMeals = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${target.name}`;
       const urlDrinks = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${target.name}`;
-      try {
-        const foods = await fetch(testPath ? urlMeals : urlDrinks);
-        const jsonFood = await foods.json();
-        if (testPath) {
-          setApiResult({ ...apiResult, meals: jsonFood.meals });
-        } else {
-          setApiResult({ ...apiResult, drinks: jsonFood.drinks });
-        }
-      } catch (e) {
-        console.log(`Aconteceu algum erro na chamada da API: ${e}`);
+      const foods = await fetch(testPath ? urlMeals : urlDrinks);
+      const jsonFood = await foods.json();
+      if (testPath) {
+        setApiResult({ ...apiResult, meals: jsonFood.meals });
+      } else {
+        setApiResult({ ...apiResult, drinks: jsonFood.drinks });
       }
     } else {
       setActualCateg('All');
-      try {
-        const responseMeals = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-        const responseDrinks = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-        const jsonM = await responseMeals.json();
-        const jsonD = await responseDrinks.json();
-        setApiResult({ meals: jsonM.meals, drinks: jsonD.drinks });
-      } catch (e) {
-        console.log(`Aconteceu algum erro na chamada da API: ${e}`);
-      }
+      const responseMeals = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      const responseDrinks = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      const jsonM = await responseMeals.json();
+      const jsonD = await responseDrinks.json();
+      setApiResult({ meals: jsonM.meals, drinks: jsonD.drinks });
     }
   };
 
@@ -102,7 +91,7 @@ export default function Recipes() {
 
   return (
     <>
-      <Header />
+      <Header hasInfo={ capturaMesmo } />
       <div>
         <button
           onClick={ handleClickCateg }
@@ -112,7 +101,7 @@ export default function Recipes() {
         >
           All
         </button>
-        {fiveCategories && fiveCategories.map((categ) => (
+        {fiveCategories?.map((categ) => (
           <button
             type="button"
             name={ categ }
@@ -123,25 +112,31 @@ export default function Recipes() {
             {categ}
           </button>
         ))}
-        {foodsDoze && foodsDoze.map((foods, idx) => (
-          <Link
-            key={ idx }
-            to={ `/${testPath ? 'meals' : 'drinks'}`
-            + `/${!testPath ? foods.idDrink : foods.idMeal}` }
-          >
-            <div data-testid={ `${idx}-recipe-card` }>
-              <img
-                style={ { width: '75px' } }
-                data-testid={ `${idx}-card-img` }
-                src={ testPath ? foods.strMealThumb : foods.strDrinkThumb }
-                alt={ testPath ? foods.idMeal : foods.idDrinks }
-              />
-              <p data-testid={ `${idx}-card-name` }>
-                { testPath ? foods.strMeal : foods.strDrink}
-              </p>
+        {
+          !hasInfo && (
+            <div>
+              {foodsDoze?.map((foods, idx) => (
+                <Link
+                  key={ idx }
+                  to={ `/${testPath ? 'meals' : 'drinks'}`
+                      + `/${!testPath ? foods.idDrink : foods.idMeal}` }
+                >
+                  <div data-testid={ `${idx}-recipe-card` }>
+                    <img
+                      style={ { width: '75px' } }
+                      data-testid={ `${idx}-card-img` }
+                      src={ testPath ? foods.strMealThumb : foods.strDrinkThumb }
+                      alt={ testPath ? foods.idMeal : foods.idDrinks }
+                    />
+                    <p data-testid={ `${idx}-card-name` }>
+                      { testPath ? foods.strMeal : foods.strDrink}
+                    </p>
+                  </div>
+                </Link>
+              ))}
             </div>
-          </Link>
-        ))}
+          )
+        }
       </div>
       <Footer />
     </>
