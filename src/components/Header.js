@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import mealsFetchInput from '../services/mealsFetchInput';
@@ -15,6 +15,9 @@ function Header({ hasInfo }) {
   const history = useHistory();
 
   const titleName = history.location.pathname.split('/')[1];
+  const titleWithOutSlash = titleName.replace('-', ' ').split(' ');
+  const titleCorrectly = titleWithOutSlash
+    .map((ttl) => `${ttl.charAt(0).toUpperCase() + ttl.slice(1)} `);
   const a = btnToHidden.includes(history.location.pathname);
 
   const [searchBar, setSearchBar] = useState(false);
@@ -54,26 +57,30 @@ function Header({ hasInfo }) {
 
   return (
     <div>
-      <h1>{titleName}</h1>
-      <button
-        type="button"
-        data-testid="profile-top-btn"
-        onClick={ () => history.push('/profile') }
-      >
-        <img src={ profileIcon } alt="profile icon" />
-      </button>
+      <h1 data-testid="page-title">{titleCorrectly}</h1>
+      <Link to="/profile">
+        <img
+          src={ profileIcon }
+          alt="profile icon"
+          data-testid="profile-top-btn"
+        />
+      </Link>
 
       {
         !a && (
           <button
             type="button"
-            data-testid="search-top-btn"
             onClick={ () => (!searchBar ? setSearchBar(true) : setSearchBar(false)) }
           >
-            <img src={ searchIcon } alt="search icon" />
+            <img
+              src={ searchIcon }
+              alt="search icon"
+              data-testid="search-top-btn"
+            />
           </button>
         )
       }
+
       {
         searchBar && (
           <div>
