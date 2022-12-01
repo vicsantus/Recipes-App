@@ -82,10 +82,6 @@ export default function Recipes() {
   };
 
   useEffect(() => {
-
-  }, [apiResult]);
-
-  useEffect(() => {
     states.setApis(apiResult);
   }, [apiResult, states]);
 
