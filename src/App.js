@@ -27,15 +27,15 @@ function App() {
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route exact path="/meals" component={ Recipes } />
-          <Route path="/meals/:id-da-receita" component={ RecipeDetails } />
+          <Route path="/meals/:id_da_receita" component={ RecipeDetails } />
           <Route
-            path="/meals/:id-da-receita/in_progress"
+            path="/meals/:id_da_receita/in_progress"
             component={ RecipeInProgress }
           />
           <Route exact path="/drinks" component={ Recipes } />
-          <Route path="/drinks/:id-da-receita" component={ RecipeDetails } />
+          <Route path="/drinks/:id_da_receita" component={ RecipeDetails } />
           <Route
-            path="/drinks/:id-da-receita/in_progress"
+            path="/drinks/:id_da_receita/in_progress"
             component={ RecipeInProgress }
           />
           <Route path="/profile" component={ Profile } />
