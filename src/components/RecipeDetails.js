@@ -60,7 +60,14 @@ function RecipeDetails() {
             alt={ mOrD ? food.strMealThumb : food.strDrinkThumb }
           />
           <h1 data-testid="recipe-title">{mOrD ? food.strMeal : food.strDrink }</h1>
-          <h2 data-testid="recipe-category">{food.strCategory}</h2>
+          <h2
+            data-testid="recipe-category"
+          >
+            {mOrD ? food.strCategory : (`${food.strCategory} ${food.strAlcoholic}`)}
+          </h2>
+          {!mOrD && (
+            <h2>{food.strAlcoholic}</h2>
+          )}
           <ul>
             Ingredientes
             {ingreds?.map((item, idxx) => (
@@ -68,7 +75,7 @@ function RecipeDetails() {
                 data-testid={ `${idxx}-ingredient-name-and-measure` }
                 key={ idxx }
               >
-                {item}
+                {`${measure[idxx]} ${item}`}
               </li>
             ))}
           </ul>
