@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import recommendationFetch from '../services/fetchRecom';
+import '../App.css';
+
+const six = 6;
 
 function RecipeDetails() {
   const history = useHistory();
@@ -10,6 +14,21 @@ function RecipeDetails() {
   const mOrD = pathname.includes('/meals/');
   const idPath = JSON.parse(pathname
     .replace(mOrD ? '/meals/' : '/drinks/', ''));
+
+  const [youTubeId, setYouTubeId] = useState(null);
+  const [recommendation, setRecommendation] = useState([]);
+  const [nameToMap, setNameToMap] = useState('');
+
+  useEffect(() => {
+    const namePath = pathname.split('/');
+    recommendationFetch(namePath[1]).then((res) => setRecommendation(res));
+    if (namePath[1] === 'meals') {
+      setNameToMap('Drink');
+    }
+    if (namePath[1] === 'drinks') {
+      setNameToMap('Meal');
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const makeFetch = async () => {
@@ -42,19 +61,22 @@ function RecipeDetails() {
       const measuWithOutNull = measu.filter((item) => item !== null);
       const measuExist = measuWithOutNull?.map((igd) => apiResponse[0][igd]);
       const measuExistNotNull = measuExist.filter((item) => item !== null);
-      console.log(apiResponse);
       setIngreds(ingreExistNotNull);
       setMeasure(measuExistNotNull);
-    }
-  }, [apiResponse]);
 
-  // console.log(apiResponse);
+      if (mOrD) {
+        const a = apiResponse[0].strYoutube.split('=')[1];
+        setYouTubeId(a);
+      }
+    }
+  }, [apiResponse, mOrD]);
 
   return (
     <div>
       {apiResponse?.map((food, idx) => (
         <section key={ idx }>
           <img
+            style={ { width: '175px' } }
             data-testid="recipe-photo"
             src={ mOrD ? food.strMealThumb : food.strDrinkThumb }
             alt={ mOrD ? food.strMealThumb : food.strDrinkThumb }
@@ -80,17 +102,45 @@ function RecipeDetails() {
             ))}
           </ul>
           <p data-testid="instructions">{food.strInstructions}</p>
-          {mOrD && (<iframe
-            width="560"
-            height="315"
-            src={ food.strYoutube }
-            title="YouTube video player"
-            frameBorder="0"
-            allow="clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            data-testid="video"
-          />)}
+          {mOrD && (
+            <iframe
+              src={ `https://www.youtube.com/embed/${youTubeId}` }
+              title="YouTube video player"
+              data-testid="video"
+            />
+          )}
         </section>
       ))}
+      <div className="container">
+        <div className="carousel">
+          {
+            recommendation.slice(0, six).map((item, index) => (
+
+              <div
+                key={ index }
+                data-testid={ `${index}-recommendation-card` }
+                className="item"
+              >
+                <div className="image">
+                  <img
+                    src={ item[`str${nameToMap}Thumb`] }
+                    alt="drink thumb"
+                  />
+                </div>
+                <div className="info">
+                  <p
+                    className="name"
+                    data-testid={ `${index}-recommendation-title` }
+                  >
+                    {item[`str${nameToMap}`]}
+                  </p>
+                </div>
+              </div>
+
+            ))
+          }
+        </div>
+      </div>
     </div>
   );
 }
