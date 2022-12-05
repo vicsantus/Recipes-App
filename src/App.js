@@ -8,6 +8,7 @@ import RecipeDetails from './components/RecipeDetails';
 import RecipeInProgress from './components/RecipeInProgress';
 import Recipes from './components/Recipes';
 import ApiContext from './context/ApiContext';
+import './App.css';
 
 function App() {
   const [apis, setApis] = useState('');
