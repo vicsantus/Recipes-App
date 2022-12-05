@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import clipboardCopy from 'clipboard-copy';
 import recommendationFetch from '../services/fetchRecom';
+import shareIcon from '../images/shareIcon.svg';
 import '../App.css';
 
 const six = 6;
+const fiveSeconds = 5000;
 
 function RecipeDetails() {
+  // const copy = require('clipboardCopy')
   const history = useHistory();
   const [apiResponse, setApiResponse] = useState(null);
   const [ingreds, setIngreds] = useState([]);
@@ -18,6 +22,7 @@ function RecipeDetails() {
   const [youTubeId, setYouTubeId] = useState(null);
   const [recommendation, setRecommendation] = useState([]);
   const [nameToMap, setNameToMap] = useState('');
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const namePath = pathname.split('/');
@@ -71,6 +76,12 @@ function RecipeDetails() {
     }
   }, [apiResponse, mOrD]);
 
+  const shareRecipe = async () => {
+    setCopied(true);
+    setTimeout(() => setCopied(false), fiveSeconds);
+    await clipboardCopy(`http://localhost:3000${pathname}`);
+  };
+
   return (
     <div>
       {apiResponse?.map((food, idx) => (
@@ -111,6 +122,24 @@ function RecipeDetails() {
           )}
         </section>
       ))}
+      <div>
+        {/* <clipboardCopy
+          text={  }
+          onCopy={ () => shareRecipe() }
+        > */}
+        <button
+          type="button"
+          data-testid="share-btn"
+          onClick={ () => shareRecipe() }
+        >
+          <img src={ shareIcon } alt="alt" />
+        </button>
+        {/* </clipboardCopy> */}
+
+        <button type="button" data-testid="favorite-btn">Favorite</button>
+
+        {copied && (<span>Link copied!</span>)}
+      </div>
       <div className="container">
         <div className="carousel">
           {
