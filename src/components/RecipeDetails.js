@@ -146,6 +146,7 @@ function RecipeDetails() {
           className="btnStartCont"
           type="button"
           data-testid="start-recipe-btn"
+          onClick={ () => history.push(`${history.location.pathname}/in-progress`) }
         >
           Start Recipe
         </button>

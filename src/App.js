@@ -28,20 +28,22 @@ function App() {
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route exact path="/meals" component={ Recipes } />
-          <Route path="/meals/:id_da_receita" component={ RecipeDetails } />
+          <Route exact path="/meals/:id_da_receita" component={ RecipeDetails } />
           <Route
-            path="/meals/:id_da_receita/in_progress"
+            exact
+            path="/meals/:id_da_receita/in-progress"
             component={ RecipeInProgress }
           />
           <Route exact path="/drinks" component={ Recipes } />
-          <Route path="/drinks/:id_da_receita" component={ RecipeDetails } />
+          <Route exact path="/drinks/:id_da_receita" component={ RecipeDetails } />
           <Route
-            path="/drinks/:id_da_receita/in_progress"
+            exact
+            path="/drinks/:id_da_receita/in-progress"
             component={ RecipeInProgress }
           />
-          <Route path="/profile" component={ Profile } />
-          <Route path="/done-recipes" component={ DoneRecipes } />
-          <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+          <Route exact path="/profile" component={ Profile } />
+          <Route exact path="/done-recipes" component={ DoneRecipes } />
+          <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
         </Switch>
       </BrowserRouter>
     </ApiContext.Provider>
