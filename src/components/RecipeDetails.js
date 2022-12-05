@@ -141,6 +141,15 @@ function RecipeDetails() {
           }
         </div>
       </div>
+      <div>
+        <button
+          className="btnStartCont"
+          type="button"
+          data-testid="start-recipe-btn"
+        >
+          Start Recipe
+        </button>
+      </div>
     </div>
   );
 }
