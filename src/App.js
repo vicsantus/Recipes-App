@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import './App.css';
 import DoneRecipes from './components/DoneRecipes';
 import FavoriteRecipes from './components/FavoriteRecipes';
 import Login from './components/Login';
@@ -8,10 +9,10 @@ import RecipeDetails from './components/RecipeDetails';
 import RecipeInProgress from './components/RecipeInProgress';
 import Recipes from './components/Recipes';
 import ApiContext from './context/ApiContext';
-import './App.css';
 
 function App() {
   const [apis, setApis] = useState('');
+  const [recipe, setRecipe] = useState(null);
 
   const [hasInfo, setHasInfo] = useState(false);
   const capturaMesmo = (param) => {
@@ -19,8 +20,8 @@ function App() {
   };
 
   const states = useMemo(() => ({
-    apis, setApis, hasInfo, setHasInfo, capturaMesmo,
-  }), [apis, hasInfo]);
+    apis, setApis, hasInfo, setHasInfo, capturaMesmo, recipe, setRecipe,
+  }), [apis, hasInfo, recipe]);
 
   return (
     <ApiContext.Provider value={ states }>
