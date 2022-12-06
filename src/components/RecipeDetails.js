@@ -5,13 +5,13 @@ import recommendationFetch from '../services/fetchRecom';
 import favoriteToStorage from '../services/favoriteToStorage';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHaertIcon from '../images/whiteHeartIcon.svg';
 import '../App.css';
 
 const six = 6;
 const fiveSeconds = 5000;
 
 function RecipeDetails() {
-  // const copy = require('clipboardCopy')
   const history = useHistory();
   const [apiResponse, setApiResponse] = useState(null);
   const [ingreds, setIngreds] = useState([]);
@@ -25,6 +25,7 @@ function RecipeDetails() {
   const [recommendation, setRecommendation] = useState([]);
   const [nameToMap, setNameToMap] = useState('');
   const [copied, setCopied] = useState(false);
+  const [favorite, setFavorite] = useState();
 
   useEffect(() => {
     const namePath = pathname.split('/');
@@ -35,7 +36,7 @@ function RecipeDetails() {
     if (namePath[1] === 'drinks') {
       setNameToMap('Meal');
     }
-  }, [pathname]);
+  }, [pathname, apiResponse]);
 
   useEffect(() => {
     const makeFetch = async () => {
@@ -77,6 +78,24 @@ function RecipeDetails() {
       }
     }
   }, [apiResponse, mOrD]);
+
+  useEffect(() => {
+    if (apiResponse !== null) {
+      const namePath = pathname.split('/');
+      if (namePath[1] === 'meals') {
+        const favoriteLocal = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+        const compare = apiResponse[0];
+        const verify = favoriteLocal.some((item) => item.name === compare.strMeal);
+        setFavorite(verify);
+      }
+      if (namePath[1] === 'drinks') {
+        const favoriteLocal = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+        const compare = apiResponse[0];
+        const verify = favoriteLocal.some((item) => item.name === compare.strDrink);
+        setFavorite(verify);
+      }
+    }
+  }, [apiResponse, pathname]);
 
   const shareRecipe = async () => {
     setCopied(true);
@@ -135,10 +154,17 @@ function RecipeDetails() {
 
         <button
           type="button"
-          data-testid="favorite-btn"
-          onClick={ () => favoriteToStorage(apiResponse[0], nameToMap) }
+          onClick={ () => {
+            favoriteToStorage(apiResponse[0], nameToMap);
+            setFavorite(!favorite);
+          } }
         >
-          <img src={ blackHeartIcon } alt="favorite icon" />
+          <img
+            src={ !favorite ? whiteHaertIcon : blackHeartIcon }
+            alt="favorite icon"
+            data-testid="favorite-btn"
+          />
+
         </button>
 
         {copied && (<span>Link copied!</span>)}
