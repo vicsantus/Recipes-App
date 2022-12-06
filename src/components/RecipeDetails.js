@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import clipboardCopy from 'clipboard-copy';
 import recommendationFetch from '../services/fetchRecom';
+import favoriteToStorage from '../services/favoriteToStorage';
+import shareIcon from '../images/shareIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHaertIcon from '../images/whiteHeartIcon.svg';
 import '../App.css';
 
 const six = 6;
+const fiveSeconds = 5000;
 
 function RecipeDetails() {
   const history = useHistory();
@@ -18,6 +24,8 @@ function RecipeDetails() {
   const [youTubeId, setYouTubeId] = useState(null);
   const [recommendation, setRecommendation] = useState([]);
   const [nameToMap, setNameToMap] = useState('');
+  const [copied, setCopied] = useState(false);
+  const [favorite, setFavorite] = useState();
 
   useEffect(() => {
     const namePath = pathname.split('/');
@@ -28,7 +36,7 @@ function RecipeDetails() {
     if (namePath[1] === 'drinks') {
       setNameToMap('Meal');
     }
-  }, [pathname]);
+  }, [pathname, apiResponse]);
 
   useEffect(() => {
     const makeFetch = async () => {
@@ -71,6 +79,30 @@ function RecipeDetails() {
     }
   }, [apiResponse, mOrD]);
 
+  useEffect(() => {
+    if (apiResponse !== null) {
+      const namePath = pathname.split('/');
+      if (namePath[1] === 'meals') {
+        const favoriteLocal = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+        const compare = apiResponse[0];
+        const verify = favoriteLocal.some((item) => item.name === compare.strMeal);
+        setFavorite(verify);
+      }
+      if (namePath[1] === 'drinks') {
+        const favoriteLocal = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+        const compare = apiResponse[0];
+        const verify = favoriteLocal.some((item) => item.name === compare.strDrink);
+        setFavorite(verify);
+      }
+    }
+  }, [apiResponse, pathname]);
+
+  const shareRecipe = async () => {
+    setCopied(true);
+    setTimeout(() => setCopied(false), fiveSeconds);
+    await clipboardCopy(`http://localhost:3000${pathname}`);
+  };
+
   return (
     <div>
       {apiResponse?.map((food, idx) => (
@@ -111,6 +143,32 @@ function RecipeDetails() {
           )}
         </section>
       ))}
+      <div>
+        <button
+          type="button"
+          data-testid="share-btn"
+          onClick={ () => shareRecipe() }
+        >
+          <img src={ shareIcon } alt="alt" />
+        </button>
+
+        <button
+          type="button"
+          onClick={ () => {
+            favoriteToStorage(apiResponse[0], nameToMap);
+            setFavorite(!favorite);
+          } }
+        >
+          <img
+            src={ !favorite ? whiteHaertIcon : blackHeartIcon }
+            alt="favorite icon"
+            data-testid="favorite-btn"
+          />
+
+        </button>
+
+        {copied && (<span>Link copied!</span>)}
+      </div>
       <div className="container">
         <div className="carousel">
           {
@@ -140,6 +198,16 @@ function RecipeDetails() {
             ))
           }
         </div>
+      </div>
+      <div>
+        <button
+          className="btnStartCont"
+          type="button"
+          data-testid="start-recipe-btn"
+          onClick={ () => history.push(`${history.location.pathname}/in-progress`) }
+        >
+          Start Recipe
+        </button>
       </div>
     </div>
   );

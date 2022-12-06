@@ -10,7 +10,6 @@ body {
 }
 
 .container {
-  border: 1px solid black;
   display: flex;
   gap: 10px;
   left: 12px;
@@ -20,6 +19,7 @@ body {
 .container .carousel {
   display: flex;
   margin: auto;
+  margin-bottom: 40px;
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
@@ -50,4 +50,19 @@ body {
   font-weight: 700;
   margin: 2px 0;
   text-align: center;
+}
+
+.btnStartCont {
+  background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
+  border-radius: 8px;
+  border-top: 1px solid #96d1f8;
+  bottom: 0;
+  box-shadow: black 0 1px 0;
+  padding: 5px 10px;
+  position: fixed;
+  text-decoration: none;
+  text-shadow: rgba(0, 0, 0, 0.4) 0 1px 0;
+  vertical-align: middle;
+  width: 100%;
+
 }
