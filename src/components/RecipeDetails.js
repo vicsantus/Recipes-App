@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import recommendationFetch from '../services/fetchRecom';
+import favoriteToStorage from '../services/favoriteToStorage';
 import shareIcon from '../images/shareIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../App.css';
 
 const six = 6;
@@ -123,10 +125,6 @@ function RecipeDetails() {
         </section>
       ))}
       <div>
-        {/* <clipboardCopy
-          text={  }
-          onCopy={ () => shareRecipe() }
-        > */}
         <button
           type="button"
           data-testid="share-btn"
@@ -134,9 +132,14 @@ function RecipeDetails() {
         >
           <img src={ shareIcon } alt="alt" />
         </button>
-        {/* </clipboardCopy> */}
 
-        <button type="button" data-testid="favorite-btn">Favorite</button>
+        <button
+          type="button"
+          data-testid="favorite-btn"
+          onClick={ () => favoriteToStorage(apiResponse[0], nameToMap) }
+        >
+          <img src={ blackHeartIcon } alt="favorite icon" />
+        </button>
 
         {copied && (<span>Link copied!</span>)}
       </div>
