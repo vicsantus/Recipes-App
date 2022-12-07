@@ -100,9 +100,6 @@ function RecipeDetails() {
           >
             {mOrD ? food.strCategory : (`${food.strCategory} ${food.strAlcoholic}`)}
           </h2>
-          {!mOrD && (
-            <h2>{food.strAlcoholic}</h2>
-          )}
           <ul>
             Ingredientes
             {ingreds?.map((item, idxx) => (

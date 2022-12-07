@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import CardInfoContext from '../context/CardInfoContext';
 
 const twelve = 12;
@@ -12,22 +13,26 @@ function CardInfoHead() {
   return (
 
     showCardItem?.slice(0, twelve).map((item, index) => (
-      <div
+      <Link
         key={ index }
-        data-testid={ `${index}-recipe-card` }
+        to={ `/meals/${item.idMeal}` }
       >
-        <img
-          style={ { width: '50%' } }
-          data-testid={ `${index}-card-img` }
-          src={ item.strMealThumb }
-          alt={ item.strMeal }
-        />
-        <p
-          data-testid={ `${index}-card-name` }
+        <div
+          data-testid={ `${index}-recipe-card` }
         >
-          {item.strMeal}
-        </p>
-      </div>
+          <img
+            style={ { width: '50%' } }
+            data-testid={ `${index}-card-img` }
+            src={ item.strMealThumb }
+            alt={ item.strMeal }
+          />
+          <p
+            data-testid={ `${index}-card-name` }
+          >
+            {item.strMeal}
+          </p>
+        </div>
+      </Link>
     ))
 
   );

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
 import clipboardCopy from 'clipboard-copy';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Header from './Header';
 import shareIcon from '../images/shareIcon.svg';
+import Header from './Header';
 
 const fiveSeconds = 5000;
 function DoneRecipes() {
@@ -15,6 +15,7 @@ function DoneRecipes() {
 
   useEffect(() => {
     const doneRecipesInStorage = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    console.log(doneRecipesInStorage);
     setDoneRecipes(doneRecipesInStorage);
     setDoneRecipesShow(doneRecipesInStorage);
   }, []);
