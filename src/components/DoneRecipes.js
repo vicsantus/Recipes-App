@@ -7,7 +7,6 @@ import shareIcon from '../images/shareIcon.svg';
 const fiveSeconds = 5000;
 function DoneRecipes() {
   const history = useHistory();
-  const { location: { pathname } } = history;
 
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [doneRecipesFilter, setDoneRecipesFilter] = useState([]);
