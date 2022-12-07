@@ -69,31 +69,24 @@ function RecipeInProgress() {
       setFavorite(true);
     }
   }, [apiResponse, idPath, setFavorite]);
-  console.log(apiResponse);
 
   const clickFinish = () => {
     const local = JSON.parse(localStorage.getItem('doneRecipes'));
     const date = new Date();
-    const mgxMenosUm = -1;
-    const mgxTres = 3;
-    const extract = (datee) => datee
-      .toISOString()
-      .split(/[^0-9]/)
-      .slice(0, mgxMenosUm)
-      .filter((dt, idx) => (idx === mgxTres ? `${JSON.parse(dt) - 2}` : dt));
-    const newDate = extract(date);
-    console.log(newDate);
     const doneRec = {
       id: mOrD ? apiResponse[0].idMeal : apiResponse[0].idDrink,
       type: mOrD ? 'meal' : 'drink',
-      nationality: apiResponse[0]?.strArea !== null ? apiResponse[0]?.strArea : '',
+      nationality: !apiResponse[0]?.strArea ? '' : apiResponse[0]?.strArea,
       category: apiResponse[0]?.strCategory !== null ? apiResponse[0]?.strCategory : '',
       alcoholicOrNot: !mOrD ? apiResponse[0]?.strAlcoholic : '',
       name: mOrD ? apiResponse[0]?.strMeal : apiResponse[0]?.strDrink,
       image: mOrD ? apiResponse[0]?.strMealThumb : apiResponse[0]?.strDrinkThumb,
-      doneDate: newDate,
-      tags: apiResponse[0]?.strTags,
+      doneDate: date.toISOString(),
+      tags: apiResponse[0]?.strTags !== null
+        ? apiResponse[0]?.strTags.split(',') : [],
     };
+    // `${newDate[2]}/${newDate[1]}/${newDate[0]} - ${newDate[3]}:${newDate[4]}`
+    console.log(doneRec);
     if (!local || local.length === 0) {
       localStorage.setItem('doneRecipes', JSON.stringify([doneRec]));
     } else if (!local.includes(doneRec)) {
@@ -143,6 +136,7 @@ function RecipeInProgress() {
                   type="checkbox"
                 />
                 {`${measure[idxx]} ${ingred}`}
+                {console.log(apiResponse[0]?.strTags)}
               </label>
             ))}
           </aside>

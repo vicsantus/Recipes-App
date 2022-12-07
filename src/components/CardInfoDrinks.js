@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import CardInfoContext from '../context/CardInfoContext';
 
 const twelve = 12;
@@ -12,21 +13,26 @@ function CardInfoDrinks() {
   return (
 
     showCardItem?.slice(0, twelve).map((item, index) => (
-      <div
-        key={ item.idDrink }
-        data-testid={ `${index}-recipe-card` }
+      <Link
+        key={ index }
+        to={ `/drinks/${item.idDrink}` }
       >
-        <img
-          data-testid={ `${index}-card-img` }
-          src={ item.strDrinkThumb }
-          alt={ item.strDrink }
-        />
-        <p
-          data-testid={ `${index}-card-name` }
+        <div
+          key={ item.idDrink }
+          data-testid={ `${index}-recipe-card` }
         >
-          {item.strDrink}
-        </p>
-      </div>
+          <img
+            data-testid={ `${index}-card-img` }
+            src={ item.strDrinkThumb }
+            alt={ item.strDrink }
+          />
+          <p
+            data-testid={ `${index}-card-name` }
+          >
+            {item.strDrink}
+          </p>
+        </div>
+      </Link>
     ))
 
   );
