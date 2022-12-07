@@ -51,39 +51,6 @@ function RecipeDetails() {
     }
   }, [apiResponse, pathname, setFavorite]);
 
-  // useEffect(() => {
-  //   if (apiResponse && ingreds.length > 0 && measure.length > 0 && !states.recipe) {
-  //     states.setRecipe({
-  //       apiResponse,
-  //       ingreds,
-  //       measure,
-  //       mOrD,
-  //       youTubeId,
-  //       nameToMap,
-  //       pathname,
-  //       favorite,
-  //       setFavorite,
-  //     });
-  //   }
-  //   if (states.recipe !== null && states.recipe?.favorite !== favorite) {
-  //     states.setRecipe({
-  //       ...states.recipe,
-  //       favorite,
-  //     });
-  //   }
-
-  //   console.log(states.recipe);
-  // }, [apiResponse,
-  //   ingreds,
-  //   measure,
-  //   mOrD,
-  //   youTubeId,
-  //   nameToMap,
-  //   pathname,
-  //   favorite,
-  //   setFavorite,
-  //   states]);
-
   return (
     <div>
       {apiResponse?.map((food, idx) => (

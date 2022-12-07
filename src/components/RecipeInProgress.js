@@ -86,7 +86,6 @@ function RecipeInProgress() {
         ? apiResponse[0]?.strTags.split(',') : [],
     };
     // `${newDate[2]}/${newDate[1]}/${newDate[0]} - ${newDate[3]}:${newDate[4]}`
-    console.log(doneRec);
     if (!local || local.length === 0) {
       localStorage.setItem('doneRecipes', JSON.stringify([doneRec]));
     } else if (!local.includes(doneRec)) {
@@ -115,9 +114,6 @@ function RecipeInProgress() {
           >
             {mOrD ? food.strCategory : (`${food.strCategory} ${food.strAlcoholic}`)}
           </h2>
-          {!mOrD && (
-            <h2>{food.strAlcoholic}</h2>
-          )}
           Ingredientes
           <aside>
             {ingreds?.map((ingred, idxx) => (
@@ -136,7 +132,6 @@ function RecipeInProgress() {
                   type="checkbox"
                 />
                 {`${measure[idxx]} ${ingred}`}
-                {console.log(apiResponse[0]?.strTags)}
               </label>
             ))}
           </aside>
