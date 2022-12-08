@@ -9,7 +9,7 @@ function Profile() {
 
   useEffect(() => {
     const userEmail = JSON.parse(localStorage.getItem('user'));
-    setEmailProfile(userEmail.email);
+    setEmailProfile(userEmail?.email);
   }, [setEmailProfile]);
 
   return (
