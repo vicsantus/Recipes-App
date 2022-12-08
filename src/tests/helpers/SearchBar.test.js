@@ -1,37 +1,41 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWith';
-import SearchBar from '../../components/SearchBar';
+import App from '../../App';
+
+const EMAIL_TEST = 'renanbf1992@outlook.com';
+const PASSWORD_TEST = '1234567';
 
 describe('1- Testando o arquivo SearchBar', () => {
-  test('1- Verifica se existem campos para fazer uma busca, após clicar no botão search', () => {
-    renderWithRouter(<SearchBar />);
-    const search = screen.queryByTestId('search-input');
-    expect(search).toBeDefined();
-  });
-
-  test('2- Verifica se existe uma label Ingredient na página', () => {
-    renderWithRouter(<SearchBar />);
-    const labelIngredient = screen.queryByTestId('ingredient-search-radio');
-    expect(labelIngredient).toBeDefined();
-  });
-
-  test('3- Verifica se existe uma label Name na página', () => {
-    renderWithRouter(<SearchBar />);
+  test('1- Verifica se o email da pessoa usuária está na tela', () => {
+    renderWithRouter(<App />);
+    const inputEmail = screen.getByTestId('email-input');
+    userEvent.type(inputEmail, EMAIL_TEST);
+    const inputPassword = screen.getByTestId('password-input');
+    userEvent.type(inputPassword, PASSWORD_TEST);
+    const buttonEnter = screen.getByRole('button', { name: /enter/i });
+    userEvent.click(buttonEnter);
+    const buttonSearch = screen.getByRole('img', { name: /search icon/i });
+    expect(buttonSearch).toBeInTheDocument();
+    userEvent.click(buttonSearch);
+    expect(screen.getByText('Meals')).toBeInTheDocument();
+    const search = screen.queryByTestId('search-top-btn');
+    expect(search).toBeInTheDocument();
+    const searchInput = screen.queryByTestId('search-input');
+    expect(searchInput).toBeInTheDocument();
+    const labelIngredient = screen.getByTestId('ingredient-search-radio');
+    expect(labelIngredient).toBeInTheDocument();
     const labelName = screen.queryByTestId('name-search-radio');
-    expect(labelName).toBeDefined();
-  });
-
-  test('4- Verifica se existe uma label First Letter na página', () => {
-    renderWithRouter(<SearchBar />);
+    expect(labelName).toBeInTheDocument();
     const labelFirstLetter = screen.queryByTestId('first-letter-search-radio');
-    expect(labelFirstLetter).toBeDefined();
-  });
-
-  test('5- Verifica se existe um botão search na página', () => {
-    renderWithRouter(<SearchBar />);
-    const buttonSearch = screen.queryByTestId('exec-search-btn');
-    expect(buttonSearch).toBeDefined();
+    expect(labelFirstLetter).toBeInTheDocument();
+    const buttonSearch2 = screen.queryByTestId('exec-search-btn');
+    expect(buttonSearch2).toBeInTheDocument();
+    userEvent.type(searchInput, 'Yakisoba');
+    userEvent.click(labelIngredient);
+    userEvent.click(labelName);
+    userEvent.click(labelFirstLetter);
+    userEvent.click(buttonSearch2);
   });
 });
