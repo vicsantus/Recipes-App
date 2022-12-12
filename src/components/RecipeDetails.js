@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../App.css';
 // import ApiContext from '../context/ApiContext';
@@ -8,6 +8,8 @@ import whiteHaertIcon from '../images/whiteHeartIcon.svg';
 import favoriteToStorage from '../services/favoriteToStorage';
 import useApiResponse from './hooks/recipeDetails/useApiResponse';
 import useCopieFav from './hooks/recipeDetails/useCopieFav';
+import inProgressRecipe from '../services/inProgressRecipe';
+import doneRecipe from '../services/doneRecipe';
 
 const six = 6;
 
@@ -33,6 +35,9 @@ function RecipeDetails() {
     shareRecipe,
   } = useCopieFav({ pathname });
 
+  const [inProgress, setInProgress] = useState(false);
+  const [idDone, setIsDone] = useState(false);
+
   useEffect(() => {
     if (apiResponse !== null) {
       const namePath = pathname.split('/');
@@ -50,6 +55,15 @@ function RecipeDetails() {
       }
     }
   }, [apiResponse, pathname, setFavorite]);
+
+  useEffect(() => {
+    if (apiResponse) {
+      const doneReci = doneRecipe(apiResponse[0]);
+      setIsDone(doneReci);
+      const a = inProgressRecipe(apiResponse[0]);
+      setInProgress(a);
+    }
+  }, [apiResponse]);
 
   return (
     <div>
@@ -144,16 +158,19 @@ function RecipeDetails() {
           }
         </div>
       </div>
-      <div>
-        <button
-          className="btnStartCont"
-          type="button"
-          data-testid="start-recipe-btn"
-          onClick={ () => history.push(`${history.location.pathname}/in-progress`) }
-        >
-          Start Recipe
-        </button>
-      </div>
+      {!idDone && (
+        <div>
+          <button
+            className="btnStartCont"
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ () => history.push(`${history.location.pathname}/in-progress`) }
+          >
+            {inProgress ? 'Continue Recipe' : 'Start Recipe'}
+          </button>
+        </div>
+      )}
+
     </div>
   );
 }
