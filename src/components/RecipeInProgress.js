@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-// import ApiContext from '../context/ApiContext';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHaertIcon from '../images/whiteHeartIcon.svg';
 import favoriteToStorage from '../services/favoriteToStorage';
 import useApiResponse from './hooks/recipeDetails/useApiResponse';
 import useCopieFav from './hooks/recipeDetails/useCopieFav';
-// import useApiResponse from './hooks/recipeDetails/useApiResponse';
 
 function RecipeInProgress() {
-  // const states = useContext(ApiContext);
-
   const history = useHistory();
   const { location: { pathname } } = history;
   const mOrD = pathname.includes('/meals/');
@@ -19,7 +15,8 @@ function RecipeInProgress() {
     .replace('/in-progress', '')
     .replace(mOrD ? '/meals/' : '/drinks/', ''));
   const pathWithOutProg = pathname.replace('/in-progress', '');
-  const [ingredCheck, setIngredCheck] = useState([]);
+  const [ingredChecks, setIngredCheck] = useState({});
+  const ingredCheck = ingredChecks[idPath] || [];
   const {
     apiResponse,
     ingreds,
@@ -28,10 +25,6 @@ function RecipeInProgress() {
     nameToMap,
   } = useApiResponse({ idPath, pathname, mOrD });
   const btnOk = ingreds.length === ingredCheck.length;
-  // const {
-  //   favorite,
-  //   setFavorite,
-  // } = states.recipe;
   const {
     copied,
     favorite,
@@ -41,37 +34,64 @@ function RecipeInProgress() {
 
   const onChecked = ({ target, idxx }) => {
     if (target.checked) {
-      setIngredCheck([
-        ...ingredCheck,
-        idxx,
-      ]);
+      setIngredCheck({
+        ...ingredChecks,
+        [idPath]: [
+          ...ingredCheck,
+          idxx,
+        ] });
     } else {
       const ingWithOutThis = ingredCheck.filter((idx) => idx !== idxx);
-      setIngredCheck(ingWithOutThis);
+      setIngredCheck({ ...ingredChecks, [idPath]: ingWithOutThis });
     }
   };
 
-  useEffect(() => {
-    const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (!local || local.length === 0) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify(ingredCheck));
-    } else if (local !== ingredCheck && ingredCheck.length !== 0) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify(ingredCheck));
-    } else {
-      setIngredCheck(local);
-    }
-  }, [ingredCheck]);
+  // Essa parte trata os checkbox
 
   useEffect(() => {
-    const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const idsLocal = local?.map((objs) => objs.id);
-    if (idsLocal?.includes(JSON.stringify(idPath))) {
-      setFavorite(true);
+    const local = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    setIngredCheck(local);
+  }, []);
+
+  useEffect(() => {
+    // const local = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    localStorage.setItem('inProgressRecipes', JSON
+      .stringify(ingredChecks));
+  }, [ingredChecks, idPath]);
+
+  // Logica de ao iniciar componente verificar se elemento é favorito
+  // Esse logica o test nao cobre
+
+  // useEffect(() => {
+  //   const local = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+  //   const idsLocal = local?.map((objs) => objs.id);
+  //   if (idsLocal?.includes(JSON.stringify(idPath))) {
+  //     setFavorite(true);
+  //   }
+  // }, [idPath, setFavorite]);
+
+  // Essa logica o teste cobre
+
+  useEffect(() => {
+    if (apiResponse !== null) {
+      const namePath = pathname.split('/');
+      if (namePath[1] === 'meals') {
+        const favoriteLocal = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+        const compare = apiResponse[0];
+        const verify = favoriteLocal.some((item) => item.name === compare.strMeal);
+        setFavorite(verify);
+      }
+      if (namePath[1] === 'drinks') {
+        const favoriteLocal = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+        const compare = apiResponse[0];
+        const verify = favoriteLocal.some((item) => item.name === compare.strDrink);
+        setFavorite(verify);
+      }
     }
-  }, [apiResponse, idPath, setFavorite]);
+  }, [apiResponse, pathname, setFavorite]);
 
   const clickFinish = () => {
-    const local = JSON.parse(localStorage.getItem('doneRecipes'));
+    const local = JSON.parse(localStorage.getItem('doneRecipes')) || [];
     const date = new Date();
     const doneRec = {
       id: mOrD ? apiResponse[0].idMeal : apiResponse[0].idDrink,
@@ -85,13 +105,10 @@ function RecipeInProgress() {
       tags: apiResponse[0]?.strTags !== null
         ? apiResponse[0]?.strTags.split(',') : [],
     };
-    // `${newDate[2]}/${newDate[1]}/${newDate[0]} - ${newDate[3]}:${newDate[4]}`
-    console.log(doneRec);
-    if (!local || local.length === 0) {
-      localStorage.setItem('doneRecipes', JSON.stringify([doneRec]));
-    } else if (!local.includes(doneRec)) {
-      localStorage.setItem('doneRecipes', JSON.stringify([...local, doneRec]));
-    }
+    // console.log(local.includes(doneRec));
+    // if (!local.some((receita) => receita.id === doneRec.id)) {
+    localStorage.setItem('doneRecipes', JSON.stringify([...local, doneRec]));
+    // }
     localStorage.setItem('inProgressRecipes', JSON.stringify([]));
   };
 
@@ -115,9 +132,6 @@ function RecipeInProgress() {
           >
             {mOrD ? food.strCategory : (`${food.strCategory} ${food.strAlcoholic}`)}
           </h2>
-          {!mOrD && (
-            <h2>{food.strAlcoholic}</h2>
-          )}
           Ingredientes
           <aside>
             {ingreds?.map((ingred, idxx) => (
@@ -136,7 +150,6 @@ function RecipeInProgress() {
                   type="checkbox"
                 />
                 {`${measure[idxx]} ${ingred}`}
-                {console.log(apiResponse[0]?.strTags)}
               </label>
             ))}
           </aside>
