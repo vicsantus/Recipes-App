@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
+import '../styles/Profile.css';
 
 function Profile() {
   const [emailProfile, setEmailProfile] = useState('');
@@ -13,10 +14,11 @@ function Profile() {
   }, [setEmailProfile]);
 
   return (
-    <div>
+    <div className="btnProfile">
       <Header />
-      <h1 data-testid="profile-email">{emailProfile}</h1>
+      <h1 data-testid="profile-email" className="emailProfile">{emailProfile}</h1>
       <button
+        className="buttonDR"
         type="button"
         data-testid="profile-done-btn"
         onClick={ () => history.push('/done-recipes') }
@@ -24,6 +26,7 @@ function Profile() {
         Done Recipes
       </button>
       <button
+        className="buttonFR"
         type="button"
         data-testid="profile-favorite-btn"
         onClick={ () => history.push('/favorite-recipes') }
@@ -31,6 +34,7 @@ function Profile() {
         Favorite Recipes
       </button>
       <button
+        className="buttonLogout"
         type="button"
         data-testid="profile-logout-btn"
         onClick={ () => {

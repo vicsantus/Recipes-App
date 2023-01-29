@@ -53,6 +53,7 @@ body {
 }
 
 .btnStartCont {
+  align-items: center;
   background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
   border-radius: 8px;
   border-top: 1px solid #96d1f8;
@@ -60,6 +61,7 @@ body {
   box-shadow: black 0 1px 0;
   padding: 5px 10px;
   position: fixed;
+  text-align: center;
   text-decoration: none;
   text-shadow: rgba(0, 0, 0, 0.4) 0 1px 0;
   vertical-align: middle;
@@ -68,5 +70,40 @@ body {
 }
 
 .favoritesIMG {
-  width: 140px;
+  align-items: center;
+  background-color: gold;
+  border: 2px solid black;
+  color: black;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-weight: 700;
+  height: 180px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.favoritesHeart {
+  align-items: center;
+  background-color: gold;
+  border: 2px solid black;
+  color: black;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-weight: 700;
+  height: 40px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.favoritesSheare {
+  align-items: center;
+  background-color: gold;
+  border: 2px solid black;
+  color: black;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-weight: 700;
+  height: 40px;
+  margin: 10px;
+  padding: 5px;
 }

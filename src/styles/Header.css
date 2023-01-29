@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap') ;
+
+.tituloMeals {
+  align-items: center;
+  color: red;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-size: 50px;
+  height: 45px;
+  justify-content: center;
+  text-align: center;
+  width: 1800px;
+}
+
+.menu {
+  align-items: center;
+  color: red;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-size: 50px;
+  height: 80px;
+  justify-content: center;
+  text-align: center;
+  width: 1800px;
+}
+
+.search-top-btn {
+  background-color: white;
+  border-radius: 20px;
+  display: inline-block;
+  font-family: Sacramento , cursive;
+  font-size: 20px;
+  height: 40px;
+  width: 50px;
+}

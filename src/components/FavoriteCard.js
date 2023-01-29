@@ -55,6 +55,7 @@ function FavoriteCard(data) {
       <div>
         <button type="button" onClick={ unFavorite }>
           <img
+            className="favoritesHeart"
             data-testid={ `${idx}-horizontal-favorite-btn` }
             src={ blackHeartIcon }
             alt="black-heart"
@@ -62,6 +63,7 @@ function FavoriteCard(data) {
         </button>
         <button type="button" onClick={ toClipboard }>
           <img
+            className="favoritesSheare"
             data-testid={ `${idx}-horizontal-share-btn` }
             src={ shareIcon }
             alt="share-icon"

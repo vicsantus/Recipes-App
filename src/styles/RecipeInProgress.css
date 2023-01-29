@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap') ;
+
+.imgRdid {
+  border-radius: 20px;
+  display: flex;
+  font-family: Sacramento , cursive;
+  font-size: 30px;
+  height: 100px;
+  justify-content: center;
+  text-align: center;
+  width: 1800px;
+}
+
+.imagemRd {
+  align-items: center;
+  background-color: gold;
+  border: 2px solid black;
+  color: black;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-weight: 700;
+  height: 80px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.text1id {
+  border-radius: 20px;
+  display: flex;
+  font-family: Sacramento , cursive;
+  font-size: 30px;
+  height: 20px;
+  justify-content: center;
+  text-align: center;
+  width: 1800px;
+}
+
+.text1 {
+  align-items: center;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-weight: 700;
+  height: 80px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.text2id {
+  border-radius: 20px;
+  display: flex;
+  font-family: Sacramento , cursive;
+  font-size: 30px;
+  height: 20px;
+  justify-content: center;
+  text-align: center;
+}
+
+.text2 {
+  align-items: center;
+  color: red;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-weight: 600;
+  height: 50px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.text3id {
+  border-radius: 20px;
+  display: flex;
+  font-family: Sacramento , cursive;
+  font-size: 30px;
+  height: 50px;
+  justify-content: center;
+  text-align: center;
+  width: 1800px;
+}
+
+.text3 {
+  align-items: center;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-weight: 700;
+  height: 80px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.text4id {
+  border-radius: 20px;
+  display: flex;
+  font-family: Sacramento , cursive;
+  font-size: 30px;
+  height: 150px;
+  justify-content: center;
+  text-align: center;
+  width: 1800px;
+}
+
+.text4 {
+  align-items: center;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-weight: 700;
+  height: 80px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.videoid {
+  border-radius: 20px;
+  display: flex;
+  font-family: Sacramento , cursive;
+  font-size: 30px;
+  height: 400px;
+  justify-content: center;
+  text-align: center;
+  width: 1800px;
+}
+
+.video {
+  align-items: center;
+  background-color: gold;
+  border: 2px solid black;
+  color: black;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-weight: 700;
+  height: 350px;
+  margin: 10px;
+  padding: 5px;
+  width: 750px;
+}
+
+.button1id {
+  border-radius: 20px;
+  display: flex;
+  font-family: Sacramento , cursive;
+  font-size: 30px;
+  height: 70px;
+  justify-content: center;
+  text-align: center;
+  width: 1800px;
+}
+
+.button2id {
+  border-radius: 20px;
+  display: flex;
+  font-family: Sacramento , cursive;
+  font-size: 30px;
+  height: 70px;
+  justify-content: center;
+  text-align: center;
+  width: 1800px;
+}
+
+.imagemId {
+  border-radius: 20px;
+  display: flex;
+  font-family: Sacramento , cursive;
+  font-size: 30px;
+  height: 100px;
+  justify-content: center;
+  text-align: center;
+  width: 100px;
+}
+
+.imagem1Id {
+  align-items: center;
+  background-color: gold;
+  border: 2px solid black;
+  color: black;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-weight: 600;
+  height: 100px;
+  margin: 10px;
+  padding: 5px;
+  width: 70px;
+}
+
+.info {
+  align-items: center;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-weight: 700;
+  height: 80px;
+  margin: 10px;
+  padding: 5px;
+}
