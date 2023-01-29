@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import ApiContext from '../context/ApiContext';
 import Footer from './Footer';
 import Header from './Header';
+import '../styles/Recipes.css';
 
 export default function Recipes() {
   const [apiResult, setApiResult] = useState();
@@ -84,25 +85,31 @@ export default function Recipes() {
     <>
       <Header />
       <div>
-        <button
-          onClick={ handleClickCateg }
-          name="All"
-          type="button"
-          data-testid="All-category-filter"
-        >
-          All
-        </button>
-        {fiveCategories?.map((categ) => (
+        <div className="btnAllid">
           <button
-            type="button"
-            name={ categ }
-            key={ categ }
+            className="btnAll"
             onClick={ handleClickCateg }
-            data-testid={ `${categ}-category-filter` }
+            name="All"
+            type="button"
+            data-testid="All-category-filter"
           >
-            {categ}
+            All
           </button>
-        ))}
+        </div>
+        <div className="btnCatid">
+          {fiveCategories?.map((categ) => (
+            <button
+              className="btnCat"
+              type="button"
+              name={ categ }
+              key={ categ }
+              onClick={ handleClickCateg }
+              data-testid={ `${categ}-category-filter` }
+            >
+              {categ}
+            </button>
+          ))}
+        </div>
         {
           !states.hasInfo && (
             <div>
@@ -113,15 +120,18 @@ export default function Recipes() {
                       + `/${!testPath ? foods.idDrink : foods.idMeal}` }
                 >
                   <div data-testid={ `${idx}-recipe-card` }>
-                    <img
-                      style={ { width: '75px' } }
-                      data-testid={ `${idx}-card-img` }
-                      src={ testPath ? foods.strMealThumb : foods.strDrinkThumb }
-                      alt={ testPath ? foods.idMeal : foods.idDrinks }
-                    />
-                    <p data-testid={ `${idx}-card-name` }>
-                      { testPath ? foods.strMeal : foods.strDrink}
-                    </p>
+                    <div className="imagem">
+                      <img
+                        className="imagem2"
+                        style={ { width: '75px' } }
+                        data-testid={ `${idx}-card-img` }
+                        src={ testPath ? foods.strMealThumb : foods.strDrinkThumb }
+                        alt={ testPath ? foods.idMeal : foods.idDrinks }
+                      />
+                      <p data-testid={ `${idx}-card-name` }>
+                        { testPath ? foods.strMeal : foods.strDrink}
+                      </p>
+                    </div>
                   </div>
                 </Link>
               ))}

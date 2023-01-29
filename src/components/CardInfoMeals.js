@@ -21,6 +21,7 @@ function CardInfoHead() {
           data-testid={ `${index}-recipe-card` }
         >
           <img
+            className="imagem2"
             style={ { width: '50%' } }
             data-testid={ `${index}-card-img` }
             src={ item.strMealThumb }

@@ -6,6 +6,7 @@ import whiteHaertIcon from '../images/whiteHeartIcon.svg';
 import favoriteToStorage from '../services/favoriteToStorage';
 import useApiResponse from './hooks/recipeDetails/useApiResponse';
 import useCopieFav from './hooks/recipeDetails/useCopieFav';
+import '../styles/RecipeInProgress.css';
 
 function RecipeInProgress() {
   const history = useHistory();
@@ -116,91 +117,117 @@ function RecipeInProgress() {
     <div>
       {apiResponse?.map((food, idx) => (
         <section key={ idx }>
-          <img
-            style={ { width: '175px' } }
-            data-testid="recipe-photo"
-            src={ mOrD ? food.strMealThumb : food.strDrinkThumb }
-            alt={ mOrD ? food.strMealThumb : food.strDrinkThumb }
-          />
-          <h1
-            data-testid="recipe-title"
-          >
-            {mOrD ? food.strMeal : food.strDrink }
-          </h1>
-          <h2
-            data-testid="recipe-category"
-          >
-            {mOrD ? food.strCategory : (`${food.strCategory} ${food.strAlcoholic}`)}
-          </h2>
-          Ingredientes
-          <aside>
-            {ingreds?.map((ingred, idxx) => (
-              <label
-                data-testid={ `${idxx}-ingredient-step` }
-                key={ idxx }
-                htmlFor={ `ingredient ${idxx + 1}` }
-                onChange={ ({ target }) => onChecked({ target, idxx }) }
-                style={ ingredCheck?.includes(idxx)
-                  ? { textDecoration: 'line-through solid rgb(0, 0, 0)' }
-                  : { textDecoration: 'none solid rgb(0, 0, 0)' } }
-              >
-                <input
-                  id={ `ingredient ${idxx + 1}` }
-                  checked={ !!ingredCheck?.includes(idxx) }
-                  type="checkbox"
-                />
-                {`${measure[idxx]} ${ingred}`}
-              </label>
-            ))}
-          </aside>
-          <p data-testid="instructions">{food.strInstructions}</p>
-          {mOrD && (
-            <iframe
-              src={ `https://www.youtube.com/embed/${youTubeId}` }
-              title="YouTube video player"
-              data-testid="video"
+          <div className="imgRdid">
+            <img
+              className="imagemRd"
+              style={ { width: '175px' } }
+              data-testid="recipe-photo"
+              src={ mOrD ? food.strMealThumb : food.strDrinkThumb }
+              alt={ mOrD ? food.strMealThumb : food.strDrinkThumb }
             />
-          )}
+          </div>
+          <div className="text1id">
+            <h1 data-testid="recipe-title" className="text1">
+              {mOrD ? food.strMeal : food.strDrink }
+            </h1>
+          </div>
+          <div className="text2did">
+            <h2
+              className="text2"
+              data-testid="recipe-category"
+            >
+              {mOrD ? food.strCategory : (`${food.strCategory} ${food.strAlcoholic}`)}
+            </h2>
+          </div>
+          <div className="text3id">
+            Ingredientes
+            <aside>
+              {ingreds?.map((ingred, idxx) => (
+                <label
+                  className="text2"
+                  data-testid={ `${idxx}-ingredient-step` }
+                  key={ idxx }
+                  htmlFor={ `ingredient ${idxx + 1}` }
+                  onChange={ ({ target }) => onChecked({ target, idxx }) }
+                  style={ ingredCheck?.includes(idxx)
+                    ? { textDecoration: 'line-through solid rgb(0, 0, 0)' }
+                    : { textDecoration: 'none solid rgb(0, 0, 0)' } }
+                >
+                  <input
+                    id={ `ingredient ${idxx + 1}` }
+                    checked={ !!ingredCheck?.includes(idxx) }
+                    type="checkbox"
+                  />
+                  {`${measure[idxx]} ${ingred}`}
+                </label>
+              ))}
+            </aside>
+          </div>
+          <div className="text4id">
+            <p data-testid="instructions" className="text4">
+              {food.strInstructions}
+            </p>
+          </div>
+          <div className="videoid">
+            {mOrD && (
+              <iframe
+                className="video"
+                src={ `https://www.youtube.com/embed/${youTubeId}` }
+                title="YouTube video player"
+                data-testid="video"
+              />
+            )}
+          </div>
         </section>
       ))}
       <div>
-        <button
-          type="button"
-          data-testid="share-btn"
-          onClick={ shareRecipe }
-        >
-          <img src={ shareIcon } alt="alt" />
-        </button>
+        <div className="button1id">
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ shareRecipe }
+          >
+            <img
+              className="favoritesSheare"
+              src={ shareIcon }
+              alt="alt"
+            />
+          </button>
+        </div>
+        <div className="button2id">
+          <button
+            type="button"
+            onClick={ () => {
+              favoriteToStorage(apiResponse[0], nameToMap);
+              setFavorite(!favorite);
+            } }
+          >
+            <img
+              className="favoritesHeart"
+              src={ !favorite ? whiteHaertIcon : blackHeartIcon }
+              alt="favorite icon"
+              data-testid="favorite-btn"
+            />
 
-        <button
-          type="button"
-          onClick={ () => {
-            favoriteToStorage(apiResponse[0], nameToMap);
-            setFavorite(!favorite);
-          } }
-        >
-          <img
-            src={ !favorite ? whiteHaertIcon : blackHeartIcon }
-            alt="favorite icon"
-            data-testid="favorite-btn"
-          />
-
-        </button>
-        {copied && (<span>Link copied!</span>)}
+          </button>
+          {copied && (<span>Link copied!</span>)}
+        </div>
       </div>
       <div>
-        <button
-          className="btnFinishCont"
-          type="button"
-          data-testid="finish-recipe-btn"
-          onClick={ () => {
-            clickFinish();
-            history.push('/done-recipes');
-          } }
-          disabled={ !btnOk }
-        >
-          Finish Recipe
-        </button>
+        <div className="button2id">
+          <button
+            className="btnStartCont"
+            type="button"
+            data-testid="finish-recipe-btn"
+            onClick={ () => {
+              clickFinish();
+              history.push('/done-recipes');
+            } }
+            disabled={ !btnOk }
+          >
+            Finish Recipe
+          </button>
+        </div>
       </div>
     </div>
   );

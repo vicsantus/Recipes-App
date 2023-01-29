@@ -10,6 +10,7 @@ import useApiResponse from './hooks/recipeDetails/useApiResponse';
 import useCopieFav from './hooks/recipeDetails/useCopieFav';
 import inProgressRecipe from '../services/inProgressRecipe';
 import doneRecipe from '../services/doneRecipe';
+import '../styles/RecipesDetails.css';
 
 const six = 6;
 
@@ -69,97 +70,121 @@ function RecipeDetails() {
     <div>
       {apiResponse?.map((food, idx) => (
         <section key={ idx }>
-          <img
-            style={ { width: '175px' } }
-            data-testid="recipe-photo"
-            src={ mOrD ? food.strMealThumb : food.strDrinkThumb }
-            alt={ mOrD ? food.strMealThumb : food.strDrinkThumb }
-          />
-          <h1 data-testid="recipe-title">{mOrD ? food.strMeal : food.strDrink }</h1>
-          <h2
-            data-testid="recipe-category"
-          >
-            {mOrD ? food.strCategory : (`${food.strCategory} ${food.strAlcoholic}`)}
-          </h2>
-          <ul>
-            Ingredientes
-            {ingreds?.map((item, idxx) => (
-              <li
-                data-testid={ `${idxx}-ingredient-name-and-measure` }
-                key={ idxx }
-              >
-                {`${measure[idxx]} ${item}`}
-              </li>
-            ))}
-          </ul>
-          <p data-testid="instructions">{food.strInstructions}</p>
-          {mOrD && (
-            <iframe
-              src={ `https://www.youtube.com/embed/${youTubeId}` }
-              title="YouTube video player"
-              data-testid="video"
+          <div className="imgRdid">
+            <img
+              className="imagemRd"
+              style={ { width: '175px' } }
+              data-testid="recipe-photo"
+              src={ mOrD ? food.strMealThumb : food.strDrinkThumb }
+              alt={ mOrD ? food.strMealThumb : food.strDrinkThumb }
             />
-          )}
+          </div>
+          <div className="text1id">
+            <h1 data-testid="recipe-title" className="text1">
+              {mOrD ? food.strMeal : food.strDrink }
+            </h1>
+          </div>
+          <div className="text2did">
+            <h2
+              className="text2"
+              data-testid="recipe-category"
+            >
+              {mOrD ? food.strCategory : (`${food.strCategory} ${food.strAlcoholic}`)}
+            </h2>
+          </div>
+          <div className="text3id">
+            <ul className="text3">
+              Ingredientes
+              {ingreds?.map((item, idxx) => (
+                <li
+                  className="text2"
+                  data-testid={ `${idxx}-ingredient-name-and-measure` }
+                  key={ idxx }
+                >
+                  {`${measure[idxx]} ${item}`}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="text4id">
+            <p data-testid="instructions" className="text4">
+              {food.strInstructions}
+            </p>
+          </div>
+          <div className="videoid">
+            {mOrD && (
+              <iframe
+                className="video"
+                src={ `https://www.youtube.com/embed/${youTubeId}` }
+                title="YouTube video player"
+                data-testid="video"
+              />
+            )}
+          </div>
         </section>
       ))}
       <div>
-        <button
-          type="button"
-          data-testid="share-btn"
-          onClick={ shareRecipe }
-        >
-          <img src={ shareIcon } alt="alt" />
-        </button>
-
-        <button
-          type="button"
-          onClick={ () => {
-            favoriteToStorage(apiResponse[0], nameToMap);
-            setFavorite(!favorite);
-          } }
-        >
-          <img
-            src={ !favorite ? whiteHaertIcon : blackHeartIcon }
-            alt="favorite icon"
-            data-testid="favorite-btn"
-          />
-
-        </button>
-
+        <div className="button1id">
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ shareRecipe }
+          >
+            <img
+              className="favoritesSheare"
+              src={ shareIcon }
+              alt="alt"
+            />
+          </button>
+        </div>
+        <div className="button2id">
+          <button
+            type="button"
+            onClick={ () => {
+              favoriteToStorage(apiResponse[0], nameToMap);
+              setFavorite(!favorite);
+            } }
+          >
+            <img
+              className="favoritesHeart"
+              src={ !favorite ? whiteHaertIcon : blackHeartIcon }
+              alt="favorite icon"
+              data-testid="favorite-btn"
+            />
+          </button>
+        </div>
         {copied && (<span>Link copied!</span>)}
       </div>
       <div className="container">
         <div className="carousel">
           {
             recommendation.slice(0, six).map((item, index) => (
-
               <div
                 key={ index }
                 data-testid={ `${index}-recommendation-card` }
-                className="item"
               >
-                <div className="image">
+                <div className="imagemId">
                   <img
+                    className="imagem1Id"
                     src={ item[`str${nameToMap}Thumb`] }
                     alt="drink thumb"
                   />
                 </div>
-                <div className="info">
+                <div className="infoId">
                   <p
-                    className="name"
+                    className="info"
                     data-testid={ `${index}-recommendation-title` }
                   >
                     {item[`str${nameToMap}`]}
                   </p>
                 </div>
               </div>
-
             ))
           }
         </div>
       </div>
       {!idDone && (
-        <div>
+        <div className="button2id">
           <button
             className="btnStartCont"
             type="button"
@@ -170,7 +195,6 @@ function RecipeDetails() {
           </button>
         </div>
       )}
-
     </div>
   );
 }

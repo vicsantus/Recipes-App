@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import CardInfoContext from '../context/CardInfoContext';
 import CardInfoDrinks from './CardInfoDrinks';
 import CardInfoMeals from './CardInfoMeals';
+import '../styles/SearchBar.css';
 
 export default function SearchBar({
   searchBar,
@@ -18,54 +19,66 @@ export default function SearchBar({
       {
         searchBar && (
           <div>
-            <input
-              type="text"
-              name="search"
-              value={ search }
-              data-testid="search-input"
-              onChange={ ({ target }) => setSearch(target.value) }
-            />
-            <label htmlFor="ingredient">
+            <div className="textInputId">
               <input
-                type="radio"
-                name="search-for"
-                id="ingredient"
-                value="ingredient"
-                onClick={ (e) => setSearchFor(e.target.value) }
-                data-testid="ingredient-search-radio"
+                className="textInput"
+                type="text"
+                name="search"
+                value={ search }
+                data-testid="search-input"
+                onChange={ ({ target }) => setSearch(target.value) }
               />
-              Ingredient
-            </label>
-            <label htmlFor="name">
-              <input
-                type="radio"
-                name="search-for"
-                id="name"
-                value="name"
-                onClick={ (e) => setSearchFor(e.target.value) }
-                data-testid="name-search-radio"
-              />
-              Name
-            </label>
-            <label htmlFor="first-letter">
-              <input
-                type="radio"
-                name="search-for"
-                id="first-letter"
-                value="first-letter"
-                onClick={ (e) => setSearchFor(e.target.value) }
-                data-testid="first-letter-search-radio"
-              />
-              First Letter
-            </label>
-            <button
-              type="button"
-              data-testid="exec-search-btn"
-              onClick={ () => searchSame() }
-            >
-              Search
-            </button>
-
+            </div>
+            <div>
+              <div className="labelInputId">
+                <label htmlFor="ingredient">
+                  <input
+                    className="inputId"
+                    type="radio"
+                    name="search-for"
+                    id="ingredient"
+                    value="ingredient"
+                    onClick={ (e) => setSearchFor(e.target.value) }
+                    data-testid="ingredient-search-radio"
+                  />
+                  Ingredient
+                </label>
+                <label htmlFor="name">
+                  <input
+                    className="inputId"
+                    type="radio"
+                    name="search-for"
+                    id="name"
+                    value="name"
+                    onClick={ (e) => setSearchFor(e.target.value) }
+                    data-testid="name-search-radio"
+                  />
+                  Name
+                </label>
+                <label htmlFor="first-letter">
+                  <input
+                    className="inputId"
+                    type="radio"
+                    name="search-for"
+                    id="first-letter"
+                    value="first-letter"
+                    onClick={ (e) => setSearchFor(e.target.value) }
+                    data-testid="first-letter-search-radio"
+                  />
+                  First Letter
+                </label>
+              </div>
+              <div className="btnSearchId">
+                <button
+                  className="btnSearch"
+                  type="button"
+                  data-testid="exec-search-btn"
+                  onClick={ () => searchSame() }
+                >
+                  Search
+                </button>
+              </div>
+            </div>
             <div>
               {
                 history.location.pathname === '/meals' && (
@@ -84,7 +97,6 @@ export default function SearchBar({
                 )
               }
             </div>
-
           </div>
         )
       }

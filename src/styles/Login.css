@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap') ;
+
+body {
+  align-items: center;
+  background: url('../img/login.webp') fixed no-repeat;
+  background-size: cover;
+  justify-content: center;
+  text-align: center;
+}
+
+main {
+  display: flex;
+  height: 980px;
+  justify-content: center;
+  margin-top: 300px;
+  position: fixed;
+  text-align: center;
+  width: 1850px;
+}
+
+.form {
+  align-items: center;
+  color: green;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-size: 50px;
+  justify-content: center;
+  text-align: center;
+}
+
+.titulo {
+  align-items: center;
+  color: green;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-size: 50px;
+  justify-content: center;
+  text-align: center;
+}
+
+.email {
+  border-radius: 20px;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-size: 30px;
+  height: 45px;
+  justify-content: center;
+  text-align: center;
+  width: 400px;
+}
+
+.senha {
+  border-radius: 20px;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-size: 30px;
+  height: 45px;
+  justify-content: center;
+  text-align: center;
+  width: 400px;
+}
+
+.buttonEntrar {
+  border-radius: 20px;
+  color: black;
+  display: inline-block;
+  font-family: Sacramento , cursive;
+  font-size: 30px;
+  height: 40px;
+  width: 200px;
+}

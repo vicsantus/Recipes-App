@@ -6,6 +6,7 @@ import searchIcon from '../images/searchIcon.svg';
 import drinksFetchInput from '../services/drinksFetchInput';
 import mealsFetchInput from '../services/mealsFetchInput';
 import SearchBar from './SearchBar';
+import '../styles/Header.css';
 
 function Header() {
   const states = useContext(ApiContext);
@@ -57,29 +58,33 @@ function Header() {
 
   return (
     <div>
-      <h1 data-testid="page-title">{titleCorrectly}</h1>
-      <Link to="/profile">
-        <img
-          src={ profileIcon }
-          alt="profile icon"
-          data-testid="profile-top-btn"
-        />
-      </Link>
+      <h1 data-testid="page-title" className="tituloMeals">{titleCorrectly}</h1>
+      <div className="menu">
+        <Link to="/profile">
+          <img
+            src={ profileIcon }
+            alt="profile icon"
+            data-testid="profile-top-btn"
+            className="profile-top-btn"
+          />
+        </Link>
 
-      {
-        !a && (
-          <button
-            type="button"
-            onClick={ () => (!searchBar ? setSearchBar(true) : setSearchBar(false)) }
-          >
-            <img
-              src={ searchIcon }
-              alt="search icon"
-              data-testid="search-top-btn"
-            />
-          </button>
-        )
-      }
+        {
+          !a && (
+            <button
+              type="button"
+              className="search-top-btn"
+              onClick={ () => (!searchBar ? setSearchBar(true) : setSearchBar(false)) }
+            >
+              <img
+                src={ searchIcon }
+                alt="search icon"
+                data-testid="search-top-btn"
+              />
+            </button>
+          )
+        }
+      </div>
       <SearchBar
         searchBar={ searchBar }
         search={ search }

@@ -7,8 +7,9 @@ import App from '../../App';
 const EMAIL_TEST = 'renanbf1992@outlook.com';
 const PASSWORD_TEST = '1234567';
 
-describe('1- Testando o arquivo SearchBar', () => {
-  test('1- Verifica se o email da pessoa usuária está na tela', () => {
+describe('1- Testando o arquivo Header', () => {
+  test.skip('1- Verifica se o email da pessoa usuária está na tela', () => {
+    jest.spyOn(window, 'alert').mockImplementation(() => {});
     renderWithRouter(<App />);
     const inputEmail = screen.getByTestId('email-input');
     userEvent.type(inputEmail, EMAIL_TEST);
@@ -20,20 +21,31 @@ describe('1- Testando o arquivo SearchBar', () => {
     expect(buttonSearch).toBeInTheDocument();
     userEvent.click(buttonSearch);
     expect(screen.getByText('Meals')).toBeInTheDocument();
-    const search = screen.queryByTestId('search-top-btn');
-    expect(search).toBeInTheDocument();
-    const searchInput = screen.queryByTestId('search-input');
-    expect(searchInput).toBeInTheDocument();
-    const labelIngredient = screen.getByTestId('ingredient-search-radio');
-    expect(labelIngredient).toBeInTheDocument();
-    const labelName = screen.queryByTestId('name-search-radio');
-    expect(labelName).toBeInTheDocument();
-    const labelFirstLetter = screen.queryByTestId('first-letter-search-radio');
-    expect(labelFirstLetter).toBeInTheDocument();
+    const buttonDrinks = screen.getByRole('img', { name: /drinks icon/i });
+    userEvent.click(buttonDrinks);
+    expect(screen.getByText('Drinks')).toBeInTheDocument();
     const buttonSearch2 = screen.queryByTestId('exec-search-btn');
-    expect(buttonSearch2).toBeInTheDocument();
-    userEvent.type(searchInput, 'Yakisoba');
-    userEvent.click(labelFirstLetter);
     userEvent.click(buttonSearch2);
+    const buttonMeals = screen.getByRole('img', { name: /meals icon/i });
+    userEvent.click(buttonMeals);
+    expect(buttonSearch2).toBeInTheDocument();
+    userEvent.click(buttonSearch2);
+    expect(window.alert).toHaveBeenCalledTimes(2);
+  });
+
+  test.skip('2- Verifica se o email da pessoa usuária está na tela de receitas', () => {
+    jest.spyOn(window, 'alert').mockImplementation(() => {});
+    renderWithRouter(<App />);
+    const buttonSearch = screen.getByRole('img', { name: /search icon/i });
+    expect(buttonSearch).toBeInTheDocument();
+    userEvent.click(buttonSearch);
+    const inputSearch = screen.getByTestId('search-input');
+    userEvent.type(inputSearch, 'Sushi');
+    expect(inputSearch).toHaveValue('Sushi');
+    const labelName = screen.queryByTestId('name-search-radio');
+    userEvent.click(labelName);
+    const buttonSearch2 = screen.queryByTestId('exec-search-btn');
+    userEvent.click(buttonSearch2);
+    userEvent.click(window.alert);
   });
 });

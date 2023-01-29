@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import Header from './Header';
+import '../styles/DoneRecipes.css';
 
 const fiveSeconds = 5000;
 function DoneRecipes() {
@@ -32,10 +33,11 @@ function DoneRecipes() {
   };
 
   return (
-    <div>
+    <div className="btnDoneRecipes">
       <Header />
       <div>
         <button
+          className="buttonAll"
           type="button"
           data-testid="filter-by-all-btn"
           onClick={ () => setDoneRecipesFilter(doneRecipes) }
@@ -43,6 +45,7 @@ function DoneRecipes() {
           All
         </button>
         <button
+          className="buttonMeals"
           type="button"
           data-testid="filter-by-meal-btn"
           onClick={ () => setDoneRecipesFilter(doneRecipes
@@ -51,6 +54,7 @@ function DoneRecipes() {
           Meals
         </button>
         <button
+          className="buttonDrinks"
           type="button"
           data-testid="filter-by-drink-btn"
           onClick={ () => setDoneRecipesFilter(doneRecipes

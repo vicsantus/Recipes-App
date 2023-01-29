@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap') ;
+
+.btnAll {
+  background-color: white;
+  border-radius: 20px;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-size: 25px;
+  height: 30px;
+  justify-content: center;
+  text-align: center;
+  width: 80px;
+}
+
+.btnCat {
+  background-color: white;
+  border-radius: 20px;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-size: 25px;
+  height: 30px;
+  justify-content: center;
+  text-align: center;
+  width: 90px;
+}
+
+.btnAllid {
+  border-radius: 20px;
+  display: flex;
+  font-family: Sacramento , cursive;
+  font-size: 30px;
+  height: 30px;
+  justify-content: center;
+  text-align: center;
+  width: 1800px;
+}
+
+.btnCatid {
+  border-radius: 20px;
+  display: flex;
+  font-family: Sacramento , cursive;
+  font-size: 30px;
+  height: 40px;
+  justify-content: center;
+  text-align: center;
+  width: 1800px;
+}
+
+.imagem {
+  align-items: center;
+  font-family: Sacramento , cursive;
+  font-size: 20px;
+  height: 125px;
+  justify-content: center;
+  text-align: center;
+  width: 1795px;
+}
+
+.imagem2 {
+  align-items: center;
+  background-color: gold;
+  border: 2px solid black;
+  color: black;
+  display: center;
+  font-family: Sacramento , cursive;
+  font-weight: 700;
+  height: 80px;
+  margin: 10px;
+  padding: 5px;
+}

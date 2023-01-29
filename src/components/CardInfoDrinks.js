@@ -22,6 +22,7 @@ function CardInfoDrinks() {
           data-testid={ `${index}-recipe-card` }
         >
           <img
+            className="imagem2"
             data-testid={ `${index}-card-img` }
             src={ item.strDrinkThumb }
             alt={ item.strDrink }
